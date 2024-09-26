@@ -12,61 +12,39 @@
     actualRe = new RegExp(
       '^' + actual.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(/.*)?$',
       'i'
-    ),
-    delay = 10000,
-    max = 1000 * 60 * 60 * 24,
-    dry = [];
+    );
 
   function replace() {
-    if (delay < max) delay++;
-    setTimeout(replace, delay);
-    var old,
-      src,
-      ds,
-      i = findFrame(function (f) {
-        src = f.src || (f.dataset && f.dataset.src);
-        if (src) {
-          if (actualRe.test(src)) {
-            return false;
+    var frames = document.body ? document.body.getElementsByTagName('iframe') : [];
+    for (var i = 0; i < frames.length; i++) {
+      var f = frames[i];
+      var src = f.src || (f.dataset && f.dataset.src);
+      if (src && !actualRe.test(src)) {
+        var old = src.match(re);
+        if (old) {
+          var protocol = old[1] || 'https://';
+          var newDomain = actual.replace(/^https?:\/\//, '');
+          var path = old[4] || '';
+          var newSrc = protocol + newDomain + path;
+
+          if (f.src) {
+            f.src = newSrc;
           }
-
-          old = src.match(re);
-          if (old) {
-            var protocol = old[1] || 'https://';
-            var newDomain = actual.replace(/^https?:\/\//, '');
-            var path = old[4] || '';
-
-            var newSrc = protocol + newDomain + path;
-
-            if (f.src) {
-              f.src = newSrc;
-            }
-            if (f.dataset && f.dataset.src) {
-              f.dataset.src = newSrc;
-            }
-            return true;
+          if (f.dataset && f.dataset.src) {
+            f.dataset.src = newSrc;
           }
-        }
-        return false;
-      });
-
-    if (!i) {
-      return;
-    }
-  }
-
-  function findFrame(fn) {
-    if (document.body) {
-      var frames = document.body.getElementsByTagName('iframe');
-      for (var i = 0; i < frames.length; i++) {
-        if (fn(frames[i])) {
-          return frames[i];
         }
       }
     }
-    return null;
   }
 
+  
   replace();
-  setInterval(replace, 5000);
+
+
+  var observer = new MutationObserver(replace);
+  observer.observe(document.body, { childList: true, subtree: true });
+
+  
+  setInterval(replace, 10000);
 })();
