@@ -1,1 +1,39 @@
-function _0x98dc(){var _0x3a9684=['dataset','3356290iaWDgU','__lumex_url_replacer_v4','11apShlb','getElementsByTagName','480724YrKaDe','src','https://','9dXotbr','279635mywUYI','match','test','36ZPpQAY','67485VZKNEA','12zBCwtA','9882740ElNajm','2436440Rschfd','iframe','(/.*)?$','observe','body','length','\x5c$&','https://p.lumex.bar','2088270gRmjHx'];_0x98dc=function(){return _0x3a9684;};return _0x98dc();}function _0x1883(_0x54fe7c,_0x4077e8){var _0x98dcb9=_0x98dc();return _0x1883=function(_0x1883f4,_0x554391){_0x1883f4=_0x1883f4-0x168;var _0x13d98d=_0x98dcb9[_0x1883f4];return _0x13d98d;},_0x1883(_0x54fe7c,_0x4077e8);}(function(_0x4211b4,_0x421531){var _0x3ac720=_0x1883,_0x554c68=_0x4211b4();while(!![]){try{var _0x56256a=parseInt(_0x3ac720(0x17a))/0x1+-parseInt(_0x3ac720(0x168))/0x2*(-parseInt(_0x3ac720(0x169))/0x3)+parseInt(_0x3ac720(0x16a))/0x4*(-parseInt(_0x3ac720(0x17e))/0x5)+parseInt(_0x3ac720(0x174))/0x6+parseInt(_0x3ac720(0x176))/0x7+-parseInt(_0x3ac720(0x16c))/0x8*(parseInt(_0x3ac720(0x17d))/0x9)+parseInt(_0x3ac720(0x16b))/0xa*(-parseInt(_0x3ac720(0x178))/0xb);if(_0x56256a===_0x421531)break;else _0x554c68['push'](_0x554c68['shift']());}catch(_0x1b4437){_0x554c68['push'](_0x554c68['shift']());}}}(_0x98dc,0x3da7b),(function(){var _0xaa9aac=_0x1883,_0x23db66=_0xaa9aac(0x177);if(window[_0x23db66])return;window[_0x23db66]=!![];var _0x543acd=_0xaa9aac(0x173),_0x3782ca=/^(https?:\/\/)?([\w-]+\.)?lumex\.(ink|me|bar)(\/.*)?$/i,_0x56c7da=new RegExp('^'+_0x543acd['replace'](/[.*+?^${}()|[\]\\]/g,_0xaa9aac(0x172))+_0xaa9aac(0x16e),'i');function _0x5e64b6(){var _0x1ee3fc=_0xaa9aac,_0x110c98=document[_0x1ee3fc(0x170)]?document[_0x1ee3fc(0x170)][_0x1ee3fc(0x179)](_0x1ee3fc(0x16d)):[];for(var _0x2d796e=0x0;_0x2d796e<_0x110c98[_0x1ee3fc(0x171)];_0x2d796e++){var _0x42f6df=_0x110c98[_0x2d796e],_0x2802e3=_0x42f6df[_0x1ee3fc(0x17b)]||_0x42f6df[_0x1ee3fc(0x175)]&&_0x42f6df[_0x1ee3fc(0x175)][_0x1ee3fc(0x17b)];if(_0x2802e3&&!_0x56c7da[_0x1ee3fc(0x180)](_0x2802e3)){var _0x1c3e4f=_0x2802e3[_0x1ee3fc(0x17f)](_0x3782ca);if(_0x1c3e4f){var _0x4b2af8=_0x1c3e4f[0x1]||_0x1ee3fc(0x17c),_0x1c9bdb=_0x543acd['replace'](/^https?:\/\//,''),_0x3f25ce=_0x1c3e4f[0x4]||'',_0x14af0b=_0x4b2af8+_0x1c9bdb+_0x3f25ce;_0x42f6df[_0x1ee3fc(0x17b)]&&(_0x42f6df['src']=_0x14af0b),_0x42f6df[_0x1ee3fc(0x175)]&&_0x42f6df[_0x1ee3fc(0x175)]['src']&&(_0x42f6df['dataset'][_0x1ee3fc(0x17b)]=_0x14af0b);}}}}_0x5e64b6();var _0x3a23b5=new MutationObserver(_0x5e64b6);_0x3a23b5[_0xaa9aac(0x16f)](document[_0xaa9aac(0x170)],{'childList':!![],'subtree':!![]}),setInterval(_0x5e64b6,0x2710);}()));
+	(function () {
+  var SCRIPT_ID = '__lumex_url_replacer_v4';
+	if (window[SCRIPT_ID]) {
+    return;
+  }
+	window[SCRIPT_ID] = true;
+	var actual = 'https://p.lumex.bar',
+    re = /^(https?:\/\/)?([\w-]+\.)?lumex\.(ink|me|bar)(\/.*)?$/i,
+    actualRe = new RegExp(
+      '^' + actual.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(/.*)?$',
+      'i'
+    );
+	function replace() {
+    var frames = document.body ? document.body.getElementsByTagName('iframe') : [];
+    for (var i = 0; i < frames.length; i++) {
+      var f = frames[i];
+      var src = f.src || (f.dataset && f.dataset.src);
+      if (src && !actualRe.test(src)) {
+        var old = src.match(re);
+        if (old) {
+          var protocol = old[1] || 'https://';
+          var newDomain = actual.replace(/^https?:\/\//, '');
+          var path = old[4] || '';
+          var newSrc = protocol + newDomain + path;
+	if (f.src) {
+            f.src = newSrc;
+          }
+          if (f.dataset && f.dataset.src) {
+            f.dataset.src = newSrc;
+          }
+        }
+      }
+    }
+  }
+	replace();
+	var observer = new MutationObserver(replace);
+  observer.observe(document.body, { childList: true, subtree: true });
+	setInterval(replace, 10000);
+})();
