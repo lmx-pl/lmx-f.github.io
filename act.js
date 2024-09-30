@@ -6,11 +6,11 @@
   window[SCRIPT_ID] = true;
 
   var actual = 'https://p.lumex.bar',
-      re = /^(https?:\/\/)?([\w-]+\.)?lumex\.(ink|me|bar)(\/.*)?$/i,
-      actualRe = new RegExp(
-        '^' + actual.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(/.*)?$',
-        'i'
-      );
+    re = /^(https?:\/\/)?([\w-]+\.)?lumex\.(ink|me|bar)(\/.*)?$/i,
+    actualRe = new RegExp(
+      '^' + actual.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(/.*)?$',
+      'i'
+    );
 
   function replaceFrameSrc(f) {
     var src = f.src || (f.dataset && f.dataset.src);
@@ -32,19 +32,25 @@
   }
 
   function replace() {
-    var frames = document.body ? document.body.getElementsByTagName('iframe') : [];
+    console.log('replace');
+    var frames = document.body
+      ? document.body.getElementsByTagName('iframe')
+      : [];
     for (var i = 0; i < frames.length; i++) {
+      console.log(frames[i]);
       replaceFrameSrc(frames[i]);
     }
   }
 
   function init() {
+    console.log('init act');
     replace();
-    
+
     var observer = new MutationObserver(function (mutations) {
       mutations.forEach(function (mutation) {
         mutation.addedNodes.forEach(function (node) {
           if (node.tagName === 'IFRAME') {
+            console.log(node, 'node iframe');
             replaceFrameSrc(node);
           }
         });
@@ -54,7 +60,6 @@
     observer.observe(document.body, { childList: true, subtree: true });
   }
 
- 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
