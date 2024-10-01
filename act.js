@@ -15,12 +15,15 @@
   function replaceFrameSrc(f) {
     var src = f.src || (f.dataset && f.dataset.src);
     if (src && !actualRe.test(src)) {
+      console.log('replaceFrameSrc');
       var old = src.match(re);
       if (old) {
+        console.log(old, 'old');
         var protocol = old[1] || 'https://';
         var newDomain = actual.replace(/^https?:\/\//, '');
         var path = old[4] || '';
         var newSrc = protocol + newDomain + path;
+        console.log(newSrc, 'newSrc');
         if (f.src) {
           f.src = newSrc;
         }
