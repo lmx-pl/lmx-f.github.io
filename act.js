@@ -5,7 +5,7 @@
   }
   window[SCRIPT_ID] = true;
 
-  var actual = 'https://p.lumex.bar';
+  var actual = 'https://p.lumex.pw';
   var re = /^(https?:\/\/)?([\w-]+\.)?lumex\.(ink|me|bar)(\/.*)?$/i;
   var actualRe = new RegExp(
     '^' + actual.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(/.*)?$',
